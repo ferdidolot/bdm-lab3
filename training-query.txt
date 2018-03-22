@@ -1,0 +1,5 @@
+db.restaurants.findOne({borough: "Manhattan", grades:{$elemMatch: {score: {$gt: 10}}}})
+db.restaurants.aggregate([ { $match:{borough: "Manhattan", grades:{$elemMatch: {score: {$gt: 10}}}} },  {  $count: "Manhattan_rest_score_gt_10" } ])
+db.restaurants.aggregate([ {$unwind:"$grades"},{$group: {_id: "$cuisine", total: {$avg: "$grades.score"}}}])
+
+
